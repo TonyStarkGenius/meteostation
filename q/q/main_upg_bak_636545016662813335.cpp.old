@@ -1,0 +1,18 @@
+/*
+ * q.cpp
+ *
+ * Created: 17.02.2018 22:01:04
+ * Author : HP-Stark
+ */ 
+
+#include <avr/io.h>
+
+
+int main(void)
+{
+    /* Replace with your application code */
+    while (1) 
+    {
+    }
+}
+
