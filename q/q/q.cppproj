@@ -244,6 +244,12 @@
     </VisualMicroSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ADC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ADC.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="BME280.c">
       <SubType>compile</SubType>
     </Compile>
@@ -263,6 +269,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="q.ino">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Rain.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Rain.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="twi.c">

@@ -11,5 +11,6 @@
 #include "twi.h"
 #include "BME280.h"
 #include "Convert.h"
+#include "ADC.h"
 
 #endif /* MAIN_H_ */
