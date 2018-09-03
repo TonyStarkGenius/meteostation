@@ -76,29 +76,28 @@ local function measure()
        "Content-Length: "..num.."\r\n\r\n{\"value1\":".. P ..",\"value2\":".. T ..",\"value3\":"..H.."}\r\n") end)
   end
   postTelegram()
-                                      local function postTelegramRain()
-                                        conn = nil
-                                        rainy=decodeRain(rain)
-                                        if P>=1000 then num=41 else num=40 end
-conn=net.createConnection(net.TCP, 0)
-conn:on("receive", function(conn, payload) end)
-conn:connect(80,'maker.ifttt.com')
-conn:on("connection", function(conn, payload)
-conn:send("POST /trigger/post_rain/with/key/dAZ1lcXbHinubo7Y1TGeik HTTP/1.1\r\n"..
-  "Host: maker.ifttt.com\r\nConnection: close\r\nAccept: */*\r\nContent-Type: application/json\r\n" ..
-  "Content-Length: 14\r\n\r\n{\"value1\":\"".. rainy .."\"}\r\n") end)
-                                        
-                                        end
-                                      postTelegramRain()
-                                      collectgarbage()
-
-                                      
-                                      clock=clock+1
-                                      print(clock)
-                                     if (clock==5) then
-                                     tmr.stop(0)
-dofile("wi-fi.lua")
-end
+   
+  local function postTelegramRain()
+     conn = nil
+     rainy=decodeRain(rain)
+     if P>=1000 then num=41 else num=40 end
+     conn=net.createConnection(net.TCP, 0)
+     conn:on("receive", function(conn, payload) end)
+     conn:connect(80,'maker.ifttt.com')
+     conn:on("connection", function(conn, payload)
+        conn:send("POST /trigger/post_rain/with/key/dAZ1lcXbHinubo7Y1TGeik HTTP/1.1\r\n"..
+        "Host: maker.ifttt.com\r\nConnection: close\r\nAccept: */*\r\nContent-Type: application/json\r\n" ..
+        "Content-Length: 14\r\n\r\n{\"value1\":\"".. rainy .."\"}\r\n") end)           
+  end
+  postTelegramRain()
+  collectgarbage()
+  
+  clock=clock+1
+  print(clock)
+  if (clock==5) then
+     tmr.stop(0)
+     dofile("wi-fi.lua")
+  end
 end
 measure()
 tmr.alarm(0, 10000, 1, function () measure()  end)
