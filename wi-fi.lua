@@ -1,33 +1,28 @@
 function decodeChar(hex)
 return string.char(tonumber(hex,16))
 end
+
 function decodeString(str)
 local output,t=string.gsub(str,"%%(%x%x)",decodeChar)
 return output
 end
+
     print("WIFI control")
-    -- put module in AP mode
     wifi.setmode(wifi.SOFTAP)
     print("ESP8266 mode is: " .. wifi.getmode())
     cfg={}
-    -- Set the SSID of the module in AP mode and access password
-    cfg.ssid="Meteostation"
-    cfg.pwd="Industries"
+      cfg.ssid="Meteostation"
+      cfg.pwd="Industries"
     if ssid and password then
         print("ESP8266 SSID is: " .. cfg.ssid .. " and PASSWORD is: " .. cfg.pwd)
     end
-    -- Now you should see an SSID wireless router named ESP_STATION when you scan for available WIFI networks
-    -- Lets connect to the module from a computer of mobile device. So, find the SSID and connect using the password selected
     wifi.ap.config(cfg)
     ap_mac = wifi.ap.getmac()
-    -- create a server on port 80 and wait for a connection, when a connection is coming in function c will be executed
     sv=net.createServer(net.TCP,30)
     sv:listen(80,function(c)
         c:on("receive", function(c, pl)
-             -- print the payload pl received from the connection
             print(pl)
             print(string.len(pl))
-            -- wait until SSID comes back and parse the SSID and the password
             print(string.match(pl,"GET"))
             ssid_start,ssid_end=string.find(pl,"SSID=")
             if ssid_start and ssid_end then
@@ -38,18 +33,15 @@ end
                             ssid=string.sub(pl,ssid_end+1, amper1_start-1)
                             password=string.sub(pl,amper1_end+10, http_start-2)
                             ssid=decodeString(ssid)
-                            password=decodeString(password)
-                            
+                            password=decodeString(password)                     
                             print("ESP8266 connecting to SSID: " .. ssid .. " with PASSWORD: " .. password)
                             if ssid and password then
                                 sv:close()
-                                -- close the server and set the module to STATION mode
                                 wifi.setmode(wifi.STATION)
                                 print("ESP8266 mode now is: " .. wifi.getmode())
-                                -- configure the module wso it can connect to the network using the received SSID and password
                                 cfgw={}
-                                cfgw.ssid=ssid
-                                cfgw.pwd=password
+                                  cfgw.ssid=ssid
+                                  cfgw.pwd=password
                                 wifi.sta.config(cfgw)
                                 wifi.sta.connect()
                                 tmr.alarm(0, 1000, 1, function ()
@@ -66,7 +58,6 @@ end
                         end
                     end
             end
-            -- this is the web page that requests the SSID and password from the user
             c:send("HTTP/1.1 200 OK\r\nServer: ESP8266\r\nContent-Type: text/html\r\n\r\n")
             c:send("<!DOCTYPE html>")
             c:send("<html>")
