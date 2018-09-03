@@ -65,6 +65,7 @@ local function measure()
   postThingSpeak('9MYXUNRD9B828UQA', 'field1='..T..'&field2='..P..'&field3='..H..'&field4='..rain)
   collectgarbage()
   print("OK")
+  
   local function postTelegram()
      conn = nil
      conn=net.createConnection(net.TCP, 0)
@@ -99,6 +100,7 @@ local function measure()
      dofile("wi-fi.lua")
   end
 end
+
 measure()
 tmr.alarm(0, 10000, 1, function () measure()  end)
 print("ok2")
