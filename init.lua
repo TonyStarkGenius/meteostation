@@ -9,11 +9,9 @@ function decodeRain(rain)
   return out
 end
 
-
 tmr.delay(5000000)
 print(wifi.sta.status())
 clock=0
-
 
 local function measure()
   sda,scl=6,5
@@ -32,7 +30,7 @@ local function measure()
     rain=adc.read(0)
     print(rain)
   end
-    readData();
+  readData();
 
   local function postThingSpeak(api_key, data)
     local connout = nil
